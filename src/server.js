@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+
 const routes = require('./routes');
 const connection = require('./database/connection');
 
@@ -15,11 +16,11 @@ app.use(express.urlencoded({
 
 app.use(routes);
 
-connection.authenticate()
-    .then(() => {})
-    .catch((err) => {
-        console.log(err);
-    });
+try {
+    connection.authenticate();
+} catch (error) {
+    console.log(`Erro: ${error}`);
+}
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta: ${port}`);
